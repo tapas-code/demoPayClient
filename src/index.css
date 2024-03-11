@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --purple: #7D36C4;
+  --lightPurple: #A736C4;
+  --pink: #C4367A;
+  --red: #CE293D;
+  --grey: #2C2C2C;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  width: 100vw;
+  height:  100vh;
+  color: white;
+  font-family: "Poppins";
+  background: var(--grey);
+  border-radius: 2.5rem;
+}
+
+/* ---------- CONTAINER  ----------- */
+
+.container{
+  width: 100%;
+  height: 100vh;
+  /* border: 2px solid white; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------- HEADER  -------------*/
+.header{
+  /* border: 2px solid red; */
+  flex:1;
+  display: flex;
+  align-items: center;
+}
+.back--icon{
+  flex: 1;
+  padding-left: 1.5rem;
+}
+.header--text{
+  flex: 5;
+  text-align: center;
+  padding-right: 5rem;
+  font-size: 1.25rem;
+}
+
+/* -------------- SEARCHBAR  -------------------- */
+.searchbar{
+  /* border: 2px solid green; */
+  flex:1;
+  display: flex;
+  justify-content: center;
+}
+.searchbar>label{
+  width: 80%;
+  height: 3rem;
+}
+.input{
+  height: 2.5rem;
+  background-color: rgba(186, 186, 186, 0.3);
+  border-radius: 2.5rem;
+}
+
+.selected--members{
+  /* border: 2px solid teal; */
+  flex:1;
+}
+
+/* ----------- ALL MEMBERS LIST  ------------*/
+.all--membersList{
+  flex: 6;
+  background-color: white;
+  border-radius: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.wrapper{
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  /* border: 2px solid red; */
+  overflow: auto;
+  padding: 0.25rem;
+}
+
+/* ---------------- USER CARD  ----------------- */
+.user--container{
+  margin-bottom: .8rem;
+  width: 100%;
+  height: 5.5rem;
+  border: 1px solid rgba(195, 195, 195, 0.455);
+  /* border: 2px solid green; */
+  border-radius: 2.5rem;
+  box-shadow: 0 2px 6px 0px rgba(0 0 0 / 0.3);
+  display: flex;
+  align-items: center;
+}
+.profile{
+  flex: 2;
+  height: 100%;
+  /* border: 2px solid green; */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile>img{
+  object-fit: cover;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.info{
+  flex: 5;
+  height: 80%;
+  color: #000;
+  border: 2px solid red;
+  /* text-align: center; */
+}
+.tick{
+  flex: 1;
+  height: 80%;
+  border: 2px solid blue;
+}
