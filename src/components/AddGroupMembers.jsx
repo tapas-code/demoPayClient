@@ -4,19 +4,40 @@ import User from "./User";
 
 const AddGroupMembers = () => {
   const [userData, setUserData] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const fetchUserData = async () => {
+    var response = await axios("/api/user");
+    setUserData(response.data);
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      var response = await axios("/api/user");
-      setUserData(response.data);
-      console.log(response.data)
-    };
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    const searchUser = async () => {
+      const response = await axios(`/api/user/search?searchTerm=${searchTerm}`);
+      setUserData(response.data);
+    };
+
+    if(searchTerm.trim() !== "")
+      searchUser();
+    else fetchUserData();
+  }, [searchTerm]);
+
+  const addSelectedUser = (userDataToAdd) => {
+      setSelectedUsers(prev => [...prev, userDataToAdd]);
+  }
+  const removeSelectedUser = (userDataToRemove) => {
+    setSelectedUsers(prev => prev.filter(user => user !== userDataToRemove));
+  }
 
   return (
     <>
       <div className="container">
+        {/* ------------------- HEADER ---------------------- */}
         <div className="header">
           <div className="back--icon">
             <svg
@@ -40,9 +61,12 @@ const AddGroupMembers = () => {
           </div>
         </div>
 
+        {/* ------------------- SEARCH BAR ---------------------- */}
         <div className="searchbar">
           <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" />
+            <input type="text" className="grow" placeholder="Search" value={searchTerm} 
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -58,12 +82,23 @@ const AddGroupMembers = () => {
           </label>
         </div>
 
-        <div className="selected--members"></div>
+        {/* ------------------- SELECTED MEMBERS ---------------------- */}
+        <div className="selected--members">
+            {selectedUsers.length !== 0? 
+              selectedUsers.map( (su, index) => (
+                <img className="profile--img" key={index} src={su.imgUrl} alt="Selected user profile" />
+              )):<div>No members added</div> }
+        </div>
 
+        {/* ------------------- ALL MEMBERS LIST ---------------------- */}
         <div className="all--membersList">
-            <div className="wrapper">
-                {userData.length !== 0? userData.map(u => (<User userData={u}/>)): <h2>Loading..</h2>}
-            </div>
+          <div className="wrapper">
+            {userData.length !== 0 ? (
+              userData.map((u, index) => <User userData={u} key={index} addSelectedUser = {addSelectedUser} removeSelectedUser = {removeSelectedUser} />)
+            ) : (
+              <h2>Loading..</h2>
+            )}
+          </div>
         </div>
       </div>
     </>
